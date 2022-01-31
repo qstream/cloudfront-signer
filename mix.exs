@@ -4,12 +4,13 @@ defmodule CloudfrontSigner.MixProject do
   def project do
     [
       app: :cloudfront_signer,
-      version: "0.1.0",
-      elixir: "~> 1.6",
+      version: "0.2.0",
+      elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       package: package(),
       description: description(),
-      deps: deps()
+      deps: deps(),
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
 
@@ -22,9 +23,9 @@ defmodule CloudfrontSigner.MixProject do
 
   defp deps do
     [
-      {:poison, "~> 3.1"},
-      {:timex, "~> 3.1"},
-      {:ex_doc, "~> 0.14", only: :dev}
+      {:poison, "~> 4.0"},
+      {:timex, "~> 3.7"},
+      {:ex_doc, "~> 0.21", only: :dev}
     ]
   end
 
@@ -40,4 +41,8 @@ defmodule CloudfrontSigner.MixProject do
       links: %{"GitHub" => "https://github.com/Poeticode/cloudfront-signer"}
     ]
   end
+
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 end
