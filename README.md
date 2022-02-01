@@ -11,7 +11,7 @@ by adding `cloudfront_signer` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:cloudfront_signer, "~> 0.1.0"}
+    {:cloudfront_signer, "~> 0.2.0"}
   ]
 end
 ```
@@ -36,4 +36,10 @@ If you want to cache pem decodes (which is a wise choice), a registry of decoded
 ```elixir
 CloudfrontSigner.DistributionRegistry.get_distribution(:my_app, :my_distribution)
 |> CloudfrontSigner.sign(path, [arg: "value], expiry)
+```
+
+By default it uses Poison, but you can specify a different JSON processor such as Jason by setting this in your `config.exs`:
+
+```elixir
+config :cloudfront_signer, :json_codec, Jason
 ```
