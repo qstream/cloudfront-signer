@@ -43,3 +43,17 @@ By default it uses Poison, but you can specify a different JSON processor such a
 ```elixir
 config :cloudfront_signer, :json_codec, Jason
 ```
+
+## Testing
+
+### Testing locally with docker compose:
+```
+# prepare the required docker images
+docker-compose build
+
+# run the tests
+docker-compose run --rm test
+
+# cleanup any containers that are still hanging around
+docker-compose down --remove-orphans -v
+```

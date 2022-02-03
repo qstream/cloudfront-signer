@@ -1,0 +1,17 @@
+**/*orig
+*log
+.byebug_history
+.git
+.gitignore
+.github
+.hg/*
+.hgignore
+.idea
+.tool-versions
+.dockerignore
+Dockerfile
+deps/
+_build
+.elixir_ls
+.vscode
+Dockerfile*
