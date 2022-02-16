@@ -18,8 +18,11 @@ defmodule CloudfrontSigner do
     expiry    = Timex.now() |> Timex.shift(seconds: expiry) |> Timex.to_unix()
     base_url  = URI.merge(domain, path) |> to_string()
     url       = url(base_url, query_params)
-    signature = signature(url, expiry, pk)
-    aws_query = signature_params(expiry, signature, kpi)
+
+    policy = %Policy{resource: url, expiry: expiry}
+
+    signature = signature(policy, url, expiry, pk)
+    aws_query = signature_params(policy, expiry, signature, kpi)
 
     signed_url(url, query_params, aws_query)
   end
@@ -37,12 +40,13 @@ defmodule CloudfrontSigner do
     URI.encode_query(query_params)
   end
 
-  defp signature_params(expires, signature, key_pair_id) do
-    "Expires=#{expires}&Signature=#{signature}&Key-Pair-Id=#{key_pair_id}"
-  end
+  defp signature_params(policy, expires, signature, key_pair_id),
+    do: "Expires=#{expires}&Policy=#{encode_policy(policy)}&Signature=#{signature}&Key-Pair-Id=#{key_pair_id}"
 
-  def signature(url, expiry, private_key) do
-    %Policy{resource: url, expiry: expiry}
+  defp encode_policy(%Policy{} = policy), do: to_string(policy) |> Base.encode64()
+
+  def signature(policy, url, expiry, private_key) do
+    policy
     |> Signature.signature(private_key)
   end
 end
