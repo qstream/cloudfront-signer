@@ -11,7 +11,7 @@ by adding `cloudfront_signer` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:cloudfront_signer, "~> 0.2.0"}
+    {:cloudfront_signer, "~> 0.3.0"}
   ]
 end
 ```
